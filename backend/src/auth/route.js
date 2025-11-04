@@ -1,14 +1,12 @@
 const express = require('express');
-
-const auth = express.Route();
-
+const auth = express.Router();
 const bcrypt = require('bcrypt');
-
 require('dotenv').config();
-
 const jwt = require('jsonwebtoken');
+const { authMiddleware } = require('../middleware/route');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-const { prisma } = require('../db/dbConfig');
 
 
 auth.post('/login' , async (req , res) => {
@@ -95,13 +93,12 @@ auth.post('/signup' , async (req , res) => {
     }
 })
 
-auth.get('/logout' , (req , res) => {
-    return res.status(200).cookie('token' , '' , {
-        httpOnly : true,
-        secure : true ,
-        sameSite : 'none' ,
-        expiresIn : new Date(Date.now())
-    }).json({
+auth.get('/logout' , authMiddleware , (req , res) => {
+    res.clearCookie('token')
+    return res.status(200).json({
         "message" : "Logout Successful"
     })
 });
+
+
+module.exports = { auth };
