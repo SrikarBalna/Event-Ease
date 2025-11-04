@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
 import "./Auth.css";
 
 const Auth = () => {
@@ -17,9 +18,11 @@ const Auth = () => {
 
   const validateLogin = () => {
     const newErrors = {};
+    if (!loginData.name || loginData.name.trim() === "") newErrors.name = "Name is required";
+    if (!loginData.email || loginData.email.trim() === "") newErrors.email = "Email is required";
     if (!loginData.email.includes("@")) newErrors.email = "Please enter a valid email address";
-    if (loginData.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
+    if (loginData.password.length <= 8)
+      newErrors.password = "Password must be at least 8 characters";
     return newErrors;
   };
 
@@ -29,8 +32,8 @@ const Auth = () => {
       newErrors.name = "Name must be at least 2 characters";
     if (!signupData.email.includes("@"))
       newErrors.email = "Please enter a valid email address";
-    if (signupData.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
+    if (signupData.password.length <= 8)
+      newErrors.password = "Password must be at least 8 characters";
     if (signupData.password !== signupData.confirmPassword)
       newErrors.confirmPassword = "Passwords don't match";
     return newErrors;
@@ -59,7 +62,7 @@ const Auth = () => {
     setIsLoading(true);
     setTimeout(() => {
       alert("Account created! Welcome to EventEase");
-      navigate("/");
+      // navigate("/");
       setIsLoading(false);
     }, 1000);
   };
