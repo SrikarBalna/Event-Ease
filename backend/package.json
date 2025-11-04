@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js"
+    "dev": "nodemon src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,7 @@
     "@prisma/client": "^6.18.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
-    "json-web-token": "^3.2.0",
+    "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.10",
     "prisma": "^6.18.0"

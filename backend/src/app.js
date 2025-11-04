@@ -1,34 +1,48 @@
 const express = require('express');
 require('dotenv').config();
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
 const cookieParser = require('cookie-parser');
 
-const { auth } = require('./auth/route');
+// const { prisma } = require('../prisma/prismaConfig');
+const { auth } = require("../src/auth/auth")
+
 
 const app = express();
-
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.use('/auth' , auth)
+app.use('/auth', auth)
 
 
-async function main(){
-    try{
-        await prisma.$connect();
-        console.log("Connected to the database successfully.");
-        app.listen(3000, () => {
-            console.log("Server is running on port 3000");
-        });
-    }catch(err){
-        console.log(err);
-    }
-}
+// app.get('/login', async (req , res) => {
+//     try{
+//         return res.status(200).json({ message: 'Login route' });
+//     }catch(err){
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// })
 
-main()
-.catch((e) => {
-    console.error('Error during server initialization:', e);
+// app.get('/signup', async (req , res) => {
+//     try{
+//         return res.status(200).json({ message: 'Signup route' });
+//     }catch(err){
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// })
+
+// app.get('/logout', async (req , res) => {
+//     try{
+//         return res.status(200).json({ message: 'Logout route' });
+//     }catch(err){
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }})
+// app.get('/hi' , (req , res) => {
+//     return res.send('Hello World!');
+// })
+
+
+app.listen(7777, () => {
+    console.log(`Server is running on port 7777`);
 });
-
-module.exports = app;
