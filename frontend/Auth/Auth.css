@@ -26,7 +26,8 @@
   background: linear-gradient(90deg, #007bff, #00bcd4);
   font-family: "Zalando Sans SemiExpanded", sans-serif;
   font-optical-sizing: auto;
-  /* -webkit-background-clip: text; */
+  -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 

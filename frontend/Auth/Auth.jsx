@@ -14,8 +14,10 @@ const Auth = () => {
     password: "",
     confirmPassword: "",
   });
-  const [errors, setErrors] = useState({});
 
+
+
+  const [errors, setErrors] = useState({});
   const validateLogin = () => {
     const newErrors = {};
     if (!loginData.name || loginData.name.trim() === "") newErrors.name = "Name is required";
@@ -119,7 +121,9 @@ const Auth = () => {
                 <p className="error-text">{errors.password}</p>
               )}
 
-              <button type="submit" disabled={isLoading}>
+              <button type="submit" onClick={()=>{
+
+              }} disabled={isLoading}>
                 {isLoading ? "Signing in..." : "Sign In"}
               </button>
             </form>
