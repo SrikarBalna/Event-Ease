@@ -1,12 +1,19 @@
 const express = require('express');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
-// const { prisma } = require('../prisma/prismaConfig');
+const { prisma } = require('../prisma/prismaConfig');
 const { auth } = require("../src/auth/auth")
 
 
 const app = express();
+
+app.use(cors({
+    origin : 'http://localhost:5173',
+    credentials : true
+}))
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -43,6 +50,19 @@ app.use('/auth', auth)
 // })
 
 
-app.listen(7777, () => {
-    console.log(`Server is running on port 7777`);
+async function main(){
+    try{
+        await prisma.$connect();
+        console.log("Connected to the database successfully");
+        app.listen(process.env.PORT , () => {
+            console.log(`Server is running on port ${process.env.PORT}`);
+        });
+    }catch(err){
+        console.log("Connection failed to the database" , err);
+    }
+}
+
+main()
+.finally(async () => {
+    await prisma.$disconnect();
 });

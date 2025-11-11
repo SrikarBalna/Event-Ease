@@ -13,29 +13,53 @@ const Auth = () => {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try{
+      const resp = await fetch("http://localhost:7777/auth/login" ,  {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        } ,
+        body: JSON.stringify(loginData)
+      })
+      if (!resp.ok) {
+        throw new Error("Login failed");
+      }
+      const data = await resp.json();
+      console.log("Login successful:", data);
+      setLoginData({ email: "", password: "" });
+      alert("Login Successful");
+    }catch(err){ 
+      console.error("Login error:", err);
+    }
+  }
 
-  const validateLogin = () => {
-    const newErrors = {};
-    if (!loginData.email.includes("@"))
-      newErrors.email = "Please enter a valid email";
-    if (loginData.password.length < 8)
-      newErrors.password = "Password must be at least 8 characters";
-    return newErrors;
-  };
-
-  const validateSignup = () => {
-    const newErrors = {};
-    if (signupData.name.trim().length < 2)
-      newErrors.name = "Name must be at least 2 characters";
-    if (!signupData.email.includes("@"))
-      newErrors.email = "Please enter a valid email";
-    if (signupData.password.length < 8)
-      newErrors.password = "Password must be at least 8 characters";
-    if (signupData.password !== signupData.confirmPassword)
-      newErrors.confirmPassword = "Passwords don't match";
-    return newErrors;
-  };
+  const handleSignup = async (e) => {
+    e.preventDefault();
+   if (signupData.password !== signupData.confirmPassword) {
+    alert("Passwords do not match");
+      console.error("Passwords do not match");
+      return;
+    }
+    try{
+      const resp = await fetch("http://localhost:7777/auth/signup" ,  {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        } ,
+        body: JSON.stringify(signupData)
+      })
+      if (resp.status !== 201) {
+        throw new Error("Signup failed");
+      }
+      const data = await resp.json();
+      console.log("Signup successful:", data);
+      setSignupData({ name: "", email: "", password: "", confirmPassword: "" });
+    }catch(err){ 
+      console.error("Signup error:", err);
+    }
+  }
 
   return (
     <div
@@ -67,10 +91,7 @@ const Auth = () => {
 
           {activeTab === "login" ? (
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setErrors(validateLogin());
-              }}
+              onSubmit={handleLogin}
             >
               <label>Email</label>
               <input
@@ -80,9 +101,7 @@ const Auth = () => {
                 onChange={(e) =>
                   setLoginData({ ...loginData, email: e.target.value })
                 }
-                className={errors.email ? "error" : ""}
               />
-              {errors.email && <p className="error-text">{errors.email}</p>}
 
               <label>Password</label>
               <input
@@ -92,20 +111,12 @@ const Auth = () => {
                 onChange={(e) =>
                   setLoginData({ ...loginData, password: e.target.value })
                 }
-                className={errors.password ? "error" : ""}
               />
-              {errors.password && (
-                <p className="error-text">{errors.password}</p>
-              )}
-
               <button type="submit">Sign In</button>
             </form>
           ) : (
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setErrors(validateSignup());
-              }}
+              onSubmit={handleSignup}
             >
               <label>Full Name</label>
               <input
@@ -115,10 +126,7 @@ const Auth = () => {
                 onChange={(e) =>
                   setSignupData({ ...signupData, name: e.target.value })
                 }
-                className={errors.name ? "error" : ""}
               />
-              {errors.name && <p className="error-text">{errors.name}</p>}
-
               <label>Email</label>
               <input
                 type="email"
@@ -127,10 +135,7 @@ const Auth = () => {
                 onChange={(e) =>
                   setSignupData({ ...signupData, email: e.target.value })
                 }
-                className={errors.email ? "error" : ""}
               />
-              {errors.email && <p className="error-text">{errors.email}</p>}
-
               <label>Password</label>
               <input
                 type="password"
@@ -139,12 +144,7 @@ const Auth = () => {
                 onChange={(e) =>
                   setSignupData({ ...signupData, password: e.target.value })
                 }
-                className={errors.password ? "error" : ""}
               />
-              {errors.password && (
-                <p className="error-text">{errors.password}</p>
-              )}
-
               <label>Confirm Password</label>
               <input
                 type="password"
@@ -156,12 +156,7 @@ const Auth = () => {
                     confirmPassword: e.target.value,
                   })
                 }
-                className={errors.confirmPassword ? "error" : ""}
               />
-              {errors.confirmPassword && (
-                <p className="error-text">{errors.confirmPassword}</p>
-              )}
-
               <button type="submit">Create Account</button>
             </form>
           )}

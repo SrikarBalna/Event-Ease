@@ -26,7 +26,7 @@ const LandingPage = () => {
             Streamline Your <span>Event Management</span>
           </h1>
           <p className="desc">
-            Create, organize, and manage workshops, seminars, and college fests effortlessly.
+            Create, organize, and manage workshops, seminars<br/>and college fests effortlessly.
           </p>
           <button className="get-started" onClick={handleGetStarted}>
             Get Started
