@@ -12,11 +12,10 @@ const Auth = () => {
     password: "",
     confirmPassword: "",
   });
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try{
-      const resp = await fetch("https://event-ease-five-xi.vercel.app/auth/login" ,  {
+      const resp = await fetch(`https://event-ease-five-xi.vercel.app/auth/login` ,  {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

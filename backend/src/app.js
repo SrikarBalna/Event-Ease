@@ -10,7 +10,7 @@ const { auth } = require("../src/auth/auth")
 const app = express();
 
 app.use(cors({
-    origin : 'https://event-ease-19lu.vercel.app/',
+    origin : [`${process.env.FRONTEND_URL}`],
     credentials : true
 }))
 
@@ -18,6 +18,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/auth', auth)
+app.get('/', (req , res) => {
+    return res.send('Welcome to Event Ease API');
+});
 
 
 // app.get('/login', async (req , res) => {
