@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router-dom";
 import "./Auth.css";
+import backgroundImg from "../Img/background.jpg"; // Your background image
 
 const Auth = () => {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
 
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -15,15 +13,13 @@ const Auth = () => {
     confirmPassword: "",
   });
 
-
-
   const [errors, setErrors] = useState({});
+
   const validateLogin = () => {
     const newErrors = {};
-    if (!loginData.name || loginData.name.trim() === "") newErrors.name = "Name is required";
-    if (!loginData.email || loginData.email.trim() === "") newErrors.email = "Email is required";
-    if (!loginData.email.includes("@")) newErrors.email = "Please enter a valid email address";
-    if (loginData.password.length <= 8)
+    if (!loginData.email.includes("@"))
+      newErrors.email = "Please enter a valid email";
+    if (loginData.password.length < 8)
       newErrors.password = "Password must be at least 8 characters";
     return newErrors;
   };
@@ -33,46 +29,26 @@ const Auth = () => {
     if (signupData.name.trim().length < 2)
       newErrors.name = "Name must be at least 2 characters";
     if (!signupData.email.includes("@"))
-      newErrors.email = "Please enter a valid email address";
-    if (signupData.password.length <= 8)
+      newErrors.email = "Please enter a valid email";
+    if (signupData.password.length < 8)
       newErrors.password = "Password must be at least 8 characters";
     if (signupData.password !== signupData.confirmPassword)
       newErrors.confirmPassword = "Passwords don't match";
     return newErrors;
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const validation = validateLogin();
-    setErrors(validation);
-    if (Object.keys(validation).length > 0) return;
-
-    setIsLoading(true);
-    setTimeout(() => {
-      alert("Login successful! Welcome back to EventEase");
-      navigate("/");
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  const handleSignup = (e) => {
-    e.preventDefault();
-    const validation = validateSignup();
-    setErrors(validation);
-    if (Object.keys(validation).length > 0) return;
-
-    setIsLoading(true);
-    setTimeout(() => {
-      alert("Account created! Welcome to EventEase");
-      // navigate("/");
-      setIsLoading(false);
-    }, 1000);
-  };
-
   return (
-    <div className="auth-page">
+    <div
+      className="auth-page"
+      style={{
+        backgroundImage: `url(${backgroundImg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <div className="auth-overlay"></div>
       <div className="auth-container">
-
         <div className="auth-card">
           <div className="tabs">
             <button
@@ -90,7 +66,12 @@ const Auth = () => {
           </div>
 
           {activeTab === "login" ? (
-            <form onSubmit={handleLogin}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setErrors(validateLogin());
+              }}
+            >
               <label>Email</label>
               <input
                 type="email"
@@ -117,14 +98,15 @@ const Auth = () => {
                 <p className="error-text">{errors.password}</p>
               )}
 
-              <button type="submit" onClick={()=>{
-
-              }} disabled={isLoading}>
-                {isLoading ? "Signing in..." : "Sign In"}
-              </button>
+              <button type="submit">Sign In</button>
             </form>
           ) : (
-            <form onSubmit={handleSignup}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setErrors(validateSignup());
+              }}
+            >
               <label>Full Name</label>
               <input
                 type="text"
@@ -180,9 +162,7 @@ const Auth = () => {
                 <p className="error-text">{errors.confirmPassword}</p>
               )}
 
-              <button type="submit" disabled={isLoading}>
-                {isLoading ? "Creating account..." : "Create Account"}
-              </button>
+              <button type="submit">Create Account</button>
             </form>
           )}
         </div>
