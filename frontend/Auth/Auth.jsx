@@ -16,7 +16,7 @@ const Auth = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try{
-      const resp = await fetch("http://localhost:7777/auth/login" ,  {
+      const resp = await fetch("https://event-ease-five-xi.vercel.app/auth/login" ,  {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const Auth = () => {
       return;
     }
     try{
-      const resp = await fetch("http://localhost:7777/auth/signup" ,  {
+      const resp = await fetch("https://event-ease-five-xi.vercel.app/auth/signup" ,  {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

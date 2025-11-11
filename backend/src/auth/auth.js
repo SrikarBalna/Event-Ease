@@ -19,7 +19,9 @@ auth.post('/login', async (req , res) => {
             return res.status(401).json({ error: 'Invalid password' });
         }
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        return res.cookie('token', token, { httpOnly: true }).status(200).json({ message: 'Login successful' });
+        return res
+            .cookie('token', token, { httpOnly: true , secure : true , sameSite : 'none' })
+            .status(200).json({ message: 'Login successful' });
     }catch(err){
         console.log(err);
         res.status(500).json({ error: 'Internal Sever Error' });
