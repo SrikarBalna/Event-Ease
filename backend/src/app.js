@@ -10,7 +10,7 @@ const { auth } = require("../src/auth/auth")
 const app = express();
 
 app.use(cors({
-    origin : 'https://event-ease-19lu.vercel.app',
+    origin : 'https://event-ease-19lu.vercel.app/',
     credentials : true
 }))
 
