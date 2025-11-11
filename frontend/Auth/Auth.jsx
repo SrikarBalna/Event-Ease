@@ -72,10 +72,6 @@ const Auth = () => {
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <div className="auth-header">
-          <h1>EventEase</h1>
-          <p>Streamline your event management</p>
-        </div>
 
         <div className="auth-card">
           <div className="tabs">

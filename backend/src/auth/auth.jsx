@@ -22,7 +22,7 @@ auth.post('/login', async (req , res) => {
         return res.cookie('token', token, { httpOnly: true }).status(200).json({ message: 'Login successful' });
     }catch(err){
         console.log(err);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Sever Error' });
     }
 })
 
