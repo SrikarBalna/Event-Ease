@@ -1,15 +1,14 @@
-import React from "react";
 import Auth from "../Auth/Auth.jsx";
-import Navbar from "../pages/Navbar.jsx";
+// import Navbar from "../pages/Navbar.jsx";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "../pages/LandingPage.jsx";
 
 function App() {
   return (
-    <>
-      {/* <Auth /> */}
-      {/* <Navbar /> */}
-      <LandingPage />
-    </>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/auth" element={<Auth />} />
+    </Routes>
   );
 }
 

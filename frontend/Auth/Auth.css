@@ -134,5 +134,5 @@ button[type="submit"]:disabled {
   text-align: center;
   font-size: 0.85rem;
   color: #777;
-  padding-right: 10px;
+  padding-left: 1.5rem;
 }

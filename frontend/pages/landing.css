@@ -35,5 +35,6 @@
   transition: background 0.2s ease;
 }
 .get-started:hover {
-  background: linear-gradient(90deg, #0056b3, #0097a7);
+    padding: 11.5px 22.5px;
+    transition: 0.5s ease;
 }
