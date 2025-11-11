@@ -32,6 +32,7 @@ const Auth = () => {
       alert("Login Successful");
     }catch(err){ 
       console.error("Login error:", err);
+      alert("Login Failed");
     }
   }
 
@@ -58,6 +59,7 @@ const Auth = () => {
       setSignupData({ name: "", email: "", password: "", confirmPassword: "" });
     }catch(err){ 
       console.error("Signup error:", err);
+      alert("Signup Failed");
     }
   }
 
